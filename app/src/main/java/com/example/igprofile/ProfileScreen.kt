@@ -5,10 +5,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,54 +45,77 @@ fun ProfileScreen() {
 fun VotingBar(
     modifier: Modifier = Modifier, leftyPercent: Int, rightyPercent: Int
 ) {
-    Row(modifier = modifier) {
+    var leftyPercentWeight: Float = (leftyPercent / 10).toFloat()
+    var rightyPercentWeight: Float = (rightyPercent / 10).toFloat()
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .background(Color.White)
+            .border(1.dp, Color.Black, CircleShape)
+    ) {
         Column(
+            // add rounded corners to the left side
             modifier = Modifier
                 .background(Color(0xFFA60321))
-                .height(20.dp)
-                .weight(rightyPercent.toFloat()/100)
+                .height(50.dp)
+                .weight(leftyPercentWeight)
+                .clip(CircleShape),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
-            Text(text = "$leftyPercent%")
+
         }
-        Column(modifier = Modifier.background(Color(0xFF03588C))
-            .height(20.dp)
-            .weight(rightyPercent.toFloat()/100)
-        ) {
-            Text(text = "$rightyPercent%")
-        }
+        Column(
+            modifier = Modifier
+                .background(Color(0xFF03588C))
+                .height(50.dp)
+                .weight(rightyPercentWeight)
+                .clip(CircleShape),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+            // add rounded corners to the right side
+        ) {}
     }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .background(Color.White),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Row {
+            Box(
+                modifier = Modifier
+                    .size(30.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFA60321))
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = "Right $rightyPercent%", fontSize = 20.sp, fontWeight = FontWeight.Bold
+            )
+        }
+
+        Row() {
+            Box(
+                modifier = Modifier
+                    .size(30.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFF03588C))
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = "Left $leftyPercent%", fontSize = 20.sp, fontWeight = FontWeight.Bold
+            )
+        }
+
+
+    }
+
 }
-
-
-//        Column(
-//            modifier = Modifier
-//                .weight(1f)
-//                .fillMaxHeight()
-//                .background(Color.Red)
-//        ) {
-//            Text(
-//                text = "$leftyPercent%",
-//                color = Color.Black,
-//                fontSize = 20.sp,
-//                fontWeight = FontWeight.Bold,
-//                modifier = Modifier.align(Alignment.CenterHorizontally)
-//            )
-//        }
-//        Column(
-//            modifier = Modifier
-//                .weight(1f)
-//                .fillMaxHeight()
-//                .background(Color.Blue)
-//        ) {
-//            Text(
-//                text = "$rightyPercent%",
-//                color = Color.Black,
-//                fontSize = 20.sp,
-//                fontWeight = FontWeight.Bold,
-//                modifier = Modifier.align(Alignment.CenterHorizontally)
-//            )
-//        }
-
 
 @Composable
 fun BlackBackgroundSquare() {
@@ -182,31 +206,4 @@ fun RoundImage(
 }
 
 
-@Composable
-fun StatSection(modifier: Modifier = Modifier) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround,
-        modifier = modifier
-    ) {
-        ProfileStat(numberText = "100", text = "Posts")
-        ProfileStat(numberText = "99.8K", text = "Followers")
-        ProfileStat(numberText = "555", text = "Following")
-    }
-}
-
-@Composable
-fun ProfileStat(
-    numberText: String, text: String, modifier: Modifier = Modifier
-) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-    ) {
-        Text(text = numberText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(text = text, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-    }
-}
 
