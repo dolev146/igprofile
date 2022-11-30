@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -33,12 +34,41 @@ fun ProfileScreen() {
             name = "Amit Segal",
             company = "N12 news channel",
         )
-        Spacer(modifier = Modifier.height(20.dp))
+
         // voting bar
         VotingBar(
             leftyPercent = 10, rightyPercent = 90
         )
+        MoreInfo("Amit Segal is a journalist and a news anchor. He is the host of the N12 news channel. He is a very popular journalist. Amit Yitzchak Segal[1] (born Biz in Nisan 5, 1982, April 10, 1982) is an Israeli journalist, radio and television personality. Serves as the political commentator of the news company and a political columnist in the \"Yediot Aharonot\" newspaper. One of the most influential journalists in Israel[2]. Presents Meet the Press on Channel 12 together with Ben Caspit.")
+
     }
+}
+
+@Composable
+fun MoreInfo(information_param: String, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(start = 26.dp , end = 26.dp)) {
+        Text(
+            text = "More information",
+            color = Color.Black,
+            fontSize = 36.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = information_param,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Normal,
+            color = Color.Black,
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+
+
+    //Text(text = "More Information", color = Color.Black, fontSize = 20.sp)
+    //Text(text = information_param, color = Color.Black, fontSize = 20.sp)
+
+
 }
 
 @Composable
@@ -47,74 +77,89 @@ fun VotingBar(
 ) {
     var leftyPercentWeight: Float = (leftyPercent / 10).toFloat()
     var rightyPercentWeight: Float = (rightyPercent / 10).toFloat()
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .background(Color.White)
-            .border(1.dp, Color.Black, CircleShape)
-    ) {
-        Column(
-            // add rounded corners to the left side
-            modifier = Modifier
-                .background(Color(0xFFA60321))
-                .height(50.dp)
-                .weight(leftyPercentWeight)
-                .clip(CircleShape),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
 
+    val shape = RoundedCornerShape(32.dp)
+    Column(
+        Modifier.padding(start = 16.dp, end = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(32.dp)
+                .background(Color.White)
+                .clip(shape)
+                .border(1.dp, Color.Black, shape)
         ) {
-
-        }
-        Column(
-            modifier = Modifier
-                .background(Color(0xFF03588C))
-                .height(50.dp)
-                .weight(rightyPercentWeight)
-                .clip(CircleShape),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-            // add rounded corners to the right side
-        ) {}
-    }
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .background(Color.White),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        Row {
-            Box(
+            Column(
+                // add rounded corners to the left side
                 modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
                     .background(Color(0xFFA60321))
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(
-                text = "Right $rightyPercent%", fontSize = 20.sp, fontWeight = FontWeight.Bold
-            )
-        }
-
-        Row() {
-            Box(
-                modifier = Modifier
-                    .size(30.dp)
+                    .weight(rightyPercentWeight)
                     .clip(CircleShape)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+            }
+            Column(
+                modifier = Modifier
                     .background(Color(0xFF03588C))
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(
-                text = "Left $leftyPercent%", fontSize = 20.sp, fontWeight = FontWeight.Bold
-            )
+                    .fillMaxHeight(leftyPercentWeight)
+                    .weight(1f)
+                    .clip(CircleShape),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+                // add rounded corners to the right side
+            ) {
+
+            }
         }
+        // second row
+        // stack over flow https://stackoverflow.com/questions/74619069/what-is-the-attribute-of-the-moddifier-that-i-need-to-change-to-make-the-corners?noredirect=1#comment131712293_74619069
+        Column(
+            Modifier.padding(start = 46.dp, end = 46.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .background(Color.White),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Row {
+                    Box(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFA60321))
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "Right $rightyPercent%",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
-
+                Row() {
+                    Box(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF03588C))
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "Left $leftyPercent%", fontSize = 20.sp, fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
     }
-
 }
 
 @Composable
