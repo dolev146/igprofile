@@ -59,16 +59,10 @@ fun MoreInfo(information_param: String, modifier: Modifier = Modifier) {
             fontSize = 20.sp,
             fontWeight = FontWeight.Normal,
             color = Color.Black,
-            maxLines = 3,
-            overflow = TextOverflow.Ellipsis
+            maxLines = 5,
+            overflow = TextOverflow.Ellipsis,
         )
     }
-
-
-    //Text(text = "More Information", color = Color.Black, fontSize = 20.sp)
-    //Text(text = information_param, color = Color.Black, fontSize = 20.sp)
-
-
 }
 
 @Composable
