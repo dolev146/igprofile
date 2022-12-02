@@ -46,7 +46,7 @@ fun ProfileScreen() {
 
 @Composable
 fun MoreInfo(information_param: String, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(start = 26.dp , end = 26.dp)) {
+    Column(modifier = modifier.padding(start = 26.dp, end = 26.dp)) {
         Text(
             text = "More information",
             color = Color.Black,
@@ -61,6 +61,7 @@ fun MoreInfo(information_param: String, modifier: Modifier = Modifier) {
             color = Color.Black,
             maxLines = 5,
             overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.heightIn(max = 70.dp)
         )
     }
 }
